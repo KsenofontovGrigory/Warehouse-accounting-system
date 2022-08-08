@@ -1,88 +1,40 @@
 import { useEffect } from 'react';
-import {Modal, Box, Button, TextField, Select, MenuItem} from '@mui/material';
+import { Modal, Box, Button } from '@mui/material';
 
 import { InputWrapper } from '../InputWrapper';
 import { SelectWrapper } from '../SelectWrapper';
 import { AddedProductsList } from '../AddedProductsList';
 
 import { useSystemData } from '../../hooks/useSystemData';
-import { useModalWindowData } from './ModalWindow.utils';
 
-import {style, textFieldStyle} from './constants';
+import { style } from './constants';
 import * as S from './ModalWindow.styles'
 
-export const ModalWindow = ({open, handleClose, title}) => {
+export const ModalWindow = ({
+    open,
+    handleClose,
+    title,
+    setAddUnallocatedProducts,
+    addUnallocatedProducts,
+    setProductQuantity,
+    addWarehouses,
+    error,
+    addProducts,
+    setUnallocatedProducts,
+    unallocatedProducts,
+    selectProduct,
+    findProductName,
+    productName,
+    productQuantity,
+    handleChangeProductName,
+    renderActionsName,
+    renderActionsQuantity,
+    renderActionsWarehouse,
+}) => {
     const {
-        warehouses,
         products,
         addedProductsArr,
     } = useSystemData()
-
-    const {
-        setQuantity,
-        warehouse,
-        handleChange,
-        setAddUnallocatedProducts,
-        addUnallocatedProducts,
-        setProductQuantity,
-        addWarehouses,
-        setName,
-        error,
-        addProducts,
-        setUnallocatedProducts,
-        unallocatedProducts,
-        selectProduct,
-        findProductName,
-        productName,
-        productQuantity,
-        handleChangeProductName,
-    } = useModalWindowData(handleClose)
-
-    const renderActionsName = (
-        <TextField
-            sx={textFieldStyle}
-            required
-            type='text'
-            inputProps={{maxLength: 20}}
-            onChange={(e) => setName(e.target.value)}
-        />
-    );
-
-    const renderActionsQuantity = (
-        <TextField
-            sx={textFieldStyle}
-            InputProps={{ inputProps: { min: 0 } }}
-            required
-            type='number'
-            onChange={(e) => {
-                if (+(e.target.value) < 1) {
-                    e.target.value = '1'
-                }
-                setQuantity(e.target.value)
-            }}
-        />
-    );
-
-    const renderActionsWarehouse = (
-        <Select
-            sx={textFieldStyle}
-            value={warehouse}
-            onChange={handleChange}
-        >
-            <MenuItem value=''>
-                <em>None</em>
-            </MenuItem>
-            {warehouses.map((item, index) => (
-                    <MenuItem
-                        value={item.name}
-                        key={index}
-                    >
-                        {item.name}
-                    </MenuItem>
-                )
-            )}
-        </Select>
-    );
 
     useEffect(() => {
         setUnallocatedProducts(products.filter((item) => item.warehouse === ''))

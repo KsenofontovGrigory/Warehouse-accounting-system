@@ -1,4 +1,4 @@
-import { Button, useMediaQuery } from '@mui/material';
+import { Button, MenuItem, Select, TextField, useMediaQuery } from '@mui/material';
 
 import { ModalWindow } from '../ModalWindow';
 import { DrawerWindow } from '../DrawerWindow';
@@ -7,6 +7,7 @@ import { useSystemData } from '../../hooks/useSystemData';
 import { useHeaderData } from './Header.utils';
 
 import * as S from './Header.styles'
+import { textFieldStyle } from '../ModalWindow/constants';
 
 export const Header = ({showWarehouses, showProducts, openWarehouses, openProducts}) => {
     const isMobile = useMediaQuery('(max-width:768px)');
@@ -16,13 +17,64 @@ export const Header = ({showWarehouses, showProducts, openWarehouses, openProduc
         warehouses,
     } = useSystemData()
     const {
+        setName,
+        setQuantity,
+        warehouse,
+        handleChange,
         handleOpenWarehouse,
         handleOpenProduct,
-        handleCloseProduct,
-        handleCloseWarehouse,
         openProduct,
+        handleCloseProduct,
         openWarehouse,
+        handleCloseWarehouse,
+        ...props
     } = useHeaderData()
+
+    const renderActionsName = (
+        <TextField
+            sx={textFieldStyle}
+            required
+            type='text'
+            inputProps={{maxLength: 20}}
+            onChange={(e) => setName(e.target.value)}
+        />
+    );
+
+    const renderActionsQuantity = (
+        <TextField
+            sx={textFieldStyle}
+            InputProps={{ inputProps: { min: 0 } }}
+            required
+            type='number'
+            onChange={(e) => {
+                if (+(e.target.value) < 1) {
+                    e.target.value = '1'
+                }
+                setQuantity(e.target.value)
+            }}
+        />
+    );
+
+    const renderActionsWarehouse = (
+        <Select
+            sx={textFieldStyle}
+            value={warehouse}
+            onChange={handleChange}
+        >
+            <MenuItem value=''>
+                <em>None</em>
+            </MenuItem>
+            {warehouses.map((item, index) => (
+                    <MenuItem
+                        value={item.name}
+                        key={index}
+                    >
+                        {item.name}
+                    </MenuItem>
+                )
+            )}
+        </Select>
+    );
 
     return (
         <S.Container>
@@ -56,12 +108,20 @@ export const Header = ({showWarehouses, showProducts, openWarehouses, openProduc
                         open={openProduct}
                         handleClose={handleCloseProduct}
                         title='Add product'
+                        renderActionsName={renderActionsName}
+                        renderActionsQuantity={renderActionsQuantity}
+                        renderActionsWarehouse={renderActionsWarehouse}
+                        {...props}
                     />
                     <DrawerWindow
                         handleOpen={handleOpenWarehouse}
                         open={openWarehouse}
                         handleClose={handleCloseWarehouse}
                         title='Add warehouse'
+                        renderActionsName={renderActionsName}
+                        renderActionsQuantity={renderActionsQuantity}
+                        renderActionsWarehouse={renderActionsWarehouse}
+                        {...props}
                     />
                 </>
             ) : (
@@ -70,11 +130,19 @@ export const Header = ({showWarehouses, showProducts, openWarehouses, openProduc
                         open={openProduct}
                         handleClose={handleCloseProduct}
                         title='Add product'
+                        renderActionsName={renderActionsName}
+                        renderActionsQuantity={renderActionsQuantity}
+                        renderActionsWarehouse={renderActionsWarehouse}
+                        {...props}
                     />
                     <ModalWindow
                         open={openWarehouse}
                         handleClose={handleCloseWarehouse}
                         title='Add warehouse'
+                        renderActionsName={renderActionsName}
+                        renderActionsQuantity={renderActionsQuantity}
+                        renderActionsWarehouse={renderActionsWarehouse}
+                        {...props}
                     />
                 </>
             )}

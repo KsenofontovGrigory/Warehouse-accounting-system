@@ -1,89 +1,38 @@
 import React, { useEffect } from 'react';
-import { Button, MenuItem, Select, SwipeableDrawer, TextField } from '@mui/material';
+import { Button, SwipeableDrawer } from '@mui/material';
 
 import { InputWrapper } from '../InputWrapper';
 import { AddedProductsList } from '../AddedProductsList';
 import { SelectWrapper } from '../SelectWrapper';
 
-import { useModalWindowData } from '../ModalWindow/ModalWindow.utils';
 import { useSystemData } from '../../hooks/useSystemData';
 
 import * as S from '../ModalWindow/ModalWindow.styles';
 import * as D from './DrawerWindow.styles';
-import { textFieldStyle } from '../ModalWindow/constants';
 
 export const DrawerWindow = ({
     open,
     handleClose,
     handleOpen,
     title,
+     setAddUnallocatedProducts,
+     addUnallocatedProducts,
+     setProductQuantity,
+     addWarehouses,
+     error,
+     addProducts,
+     setUnallocatedProducts,
+     unallocatedProducts,
+     selectProduct,
+     findProductName,
+     productName,
+     productQuantity,
+     handleChangeProductName,
+     renderActionsName,
+     renderActionsQuantity,
+     renderActionsWarehouse,
 }) => {
-    const { products, warehouses, addedProductsArr } = useSystemData()
-    const {
-        setQuantity,
-        warehouse,
-        handleChange,
-        setAddUnallocatedProducts,
-        addUnallocatedProducts,
-        selectProduct,
-        setProductQuantity,
-        addWarehouses,
-        setName,
-        error,
-        addProducts,
-        setUnallocatedProducts,
-        unallocatedProducts,
-        findProductName,
-        productName,
-        productQuantity,
-        handleChangeProductName,
-    } = useModalWindowData(handleClose)
-
-    const renderActionsQuantity = (
-        <TextField
-            sx={textFieldStyle}
-            InputProps={{ inputProps: { min: 0 } }}
-            required
-            type='number'
-            onChange={(e) => {
-                if (+(e.target.value) < 1) {
-                    e.target.value = '1'
-                }
-                setQuantity(e.target.value)
-            }}
-        />
-    );
-
-    const renderActionsName = (
-        <TextField
-            sx={textFieldStyle}
-            required
-            type='text'
-            inputProps={{maxLength: 20}}
-            onChange={(e) => setName(e.target.value)}
-        />
-    );
-
-    const renderActionsWarehouse = (
-        <Select
-            sx={textFieldStyle}
-            value={warehouse}
-            onChange={handleChange}
-        >
-            {warehouses.map((item, index) => (
-                    <MenuItem
-                        value={item.name}
-                        key={index}
-                    >
-                        {item.name}
-                    </MenuItem>
-                )
-            )}
-            <MenuItem value=''>
-                <em>None</em>
-            </MenuItem>
-        </Select>
-    );
+    const { products, addedProductsArr } = useSystemData()
 
     useEffect(() => {
         setUnallocatedProducts(products.filter((item) => item.warehouse === ''))
