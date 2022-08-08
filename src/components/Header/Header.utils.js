@@ -91,11 +91,11 @@ export const useHeaderData = () => {
     const addWarehouses = () => {
         if (name.length) {
             if (addedProductsArr.length > 0) {
-                const allProducts = products.map((el, index) => {
-                    if (el.name === addedProductsArr[index]?.name && el.warehouse === '') {
+                const allProducts = products.map((el) => {
+                    if (addedProductsArr.find((item) => item.name === el.name) && el.warehouse === '') {
                         return {
                             ...el,
-                            quantity: el?.quantity - addedProductsArr[index].quantity,
+                            quantity: el?.quantity - addedProductsArr.find((item) => item.quantity === el.quantity).quantity,
                         }
                     }
                     return el

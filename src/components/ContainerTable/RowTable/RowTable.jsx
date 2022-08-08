@@ -1,5 +1,15 @@
 import React from 'react';
-import { Box, Button, MenuItem, Modal, Select, TableCell, TableRow, TextField } from '@mui/material';
+import {
+    Box,
+    MenuItem,
+    Modal,
+    Select,
+    SwipeableDrawer,
+    TableCell,
+    TableRow,
+    TextField,
+    useMediaQuery
+} from '@mui/material';
 import {
     EditOutlined,
     DeleteForever,
@@ -9,6 +19,7 @@ import {
 } from '@mui/icons-material';
 
 import { Notification } from '../../Notification';
+import { DialogContent } from './DialogContent';
 
 import { useRowTableData } from './RowTable.utils';
 
@@ -23,6 +34,8 @@ export const RowTable = ({
                              showProducts,
                              warehouseName
 }) => {
+    const isMobile = useMediaQuery('(max-width:768px)');
+
     const {
         edit,
         setName,
@@ -152,65 +165,51 @@ export const RowTable = ({
                 </TableCell>
             )}
 
-            <Modal
-                open={open}
-                onClose={handleClose}
-                aria-labelledby='modal-modal-title'
-                aria-describedby='modal-modal-description'
-            >
-                <Box sx={style}>
-                    <S.ContainerModal>
-                        <p>Move from {warehouseName} to</p>
-                        <Select
-                            sx={{width: '200px', color: 'white'}}
-                            value={newWarehouse}
-                            onChange={handleChangeWarehouse}
-                        >
-                            <MenuItem value=''>
-                                <em>Unallocated</em>
-                            </MenuItem>
-                            {warehouses.filter((item) => item.name !== warehouseName).map((item) => {
-                                return (
-                                    <MenuItem
-                                        key={item.name}
-                                        value={item.name}
-                                    >
-                                        {item.name}
-                                    </MenuItem>
-                                )
-                            })}
-                        </Select>
-                    </S.ContainerModal>
-                    <S.ContainerModal>
-                        <p>Quantity</p>
-                        <TextField
-                            sx={{width: '200px'}}
-                            required
-                            type='number'
-                            InputProps={{ inputProps: { min: 1, max: item.quantity } }}
-                            defaultValue={item.quantity}
-                            onChange={(e) => {
-                                if (+(e.target.value) > +(item.quantity)) {
-                                    e.target.value = item.quantity
-                                }
-                                if (+(e.target.value) < 1) {
-                                    e.target.value = '1'
-                                }
-
-                                setQuantity(e.target.value)
-                            }}
-                        />
-                    </S.ContainerModal>
-                    <Button onClick={handleMoveProduct}>Move</Button>
-                </Box>
-            </Modal>
-
             <td style={{width: '0'}}>
                 <Notification
                     open={openNotification}
                     handleCloseNotification={handleCloseNotification}
                     text='There are no products in this warehouse yet'
                 />
+
+                {isMobile ? (
+                    <SwipeableDrawer
+                        open={open}
+                        onClose={handleClose}
+                        onOpen={handleOpen}
+                        anchor='bottom'
+                    >
+                        <S.ContainerDrawer>
+                            <DialogContent
+                                warehouseName={warehouseName}
+                                newWarehouse={newWarehouse}
+                                handleChangeWarehouse={handleChangeWarehouse}
+                                item={item}
+                                setQuantity={setQuantity}
+                                handleMoveProduct={handleMoveProduct}
+                            />
+                        </S.ContainerDrawer>
+                    </SwipeableDrawer>
+                ) : (
+                    <Modal
+                        open={open}
+                        onClose={handleClose}
+                        aria-labelledby='modal-modal-title'
+                        aria-describedby='modal-modal-description'
+                    >
+                        <Box sx={style}>
+
+                            <DialogContent
+                                warehouseName={warehouseName}
+                                newWarehouse={newWarehouse}
+                                handleChangeWarehouse={handleChangeWarehouse}
+                                item={item}
+                                setQuantity={setQuantity}
+                                handleMoveProduct={handleMoveProduct}
+                            />
+                        </Box>
+                    </Modal>
+                )}
             </td>
         </TableRow>
     );

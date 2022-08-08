@@ -4,18 +4,19 @@ import {
     Button,
     Modal,
     Paper,
+    SwipeableDrawer,
     Table,
     TableBody,
     TableCell,
     TableContainer,
     TableHead,
     TableRow,
+    useMediaQuery,
 } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 import { RowTable } from './RowTable';
-import { SelectWrapper } from '../SelectWrapper';
-import { AddedProductsList } from '../AddedProductsList';
+import { DialogContent } from './DialogContent';
 
 import { useContainerTableData } from './ContainerTable.utils';
 import { useSystemData } from '../../hooks/useSystemData';
@@ -24,7 +25,9 @@ import * as S from './ContainerTable.styles'
 import { style } from '../ModalWindow/constants';
 
 export const ContainerTable = ({handleDelete, data}) => {
-    const { products, addedProductsArr } = useSystemData()
+    const isMobile = useMediaQuery('(max-width:768px)');
+
+    const { products } = useSystemData()
 
     const {
         setUnallocatedProducts,
@@ -142,41 +145,51 @@ export const ContainerTable = ({handleDelete, data}) => {
                 </TableContainer>
             )}
 
-            <Modal
-                open={open}
-                onClose={handleClose}
-                aria-labelledby='modal-modal-title'
-                aria-describedby='modal-modal-description'
-            >
-                <Box sx={style}>
-                    {addedProductsArr.map((item, index) => (
-                        <AddedProductsList
-                            key={index}
-                            item={item}
+            {isMobile ? (
+                <SwipeableDrawer
+                    open={open}
+                    onClose={handleClose}
+                    onOpen={handleOpen}
+                    anchor='bottom'
+                >
+                    <S.ContainerDrawer>
+                        <DialogContent
                             setUnallocatedProducts={setUnallocatedProducts}
                             unallocatedProducts={unallocatedProducts}
-                        />
-                    ))}
-                    {addUnallocatedProducts ? (
-                        <SelectWrapper
+                            addUnallocatedProducts={addUnallocatedProducts}
                             setProductQuantity={setProductQuantity}
                             productName={productName}
                             handleChangeProductName={handleChangeProductName}
-                            unallocatedProducts={unallocatedProducts}
                             findProductName={findProductName}
+                            selectProduct={selectProduct}
+                            productQuantity={productQuantity}
+                            addProducts={addProducts}
                         />
-                    ) : null}
-                    <Button
-                        onClick={selectProduct}
-                        disabled={!unallocatedProducts.length || (!productQuantity.length || !productName.length)}
-                    >
-                        Add unallocated products
-                    </Button>
-                    <Button onClick={addProducts}>
-                        Add
-                    </Button>
-                </Box>
-            </Modal>
+                    </S.ContainerDrawer>
+                </SwipeableDrawer>
+            ) : (
+                <Modal
+                    open={open}
+                    onClose={handleClose}
+                    aria-labelledby='modal-modal-title'
+                    aria-describedby='modal-modal-description'
+                >
+                    <Box sx={style}>
+                        <DialogContent
+                            setUnallocatedProducts={setUnallocatedProducts}
+                            unallocatedProducts={unallocatedProducts}
+                            addUnallocatedProducts={addUnallocatedProducts}
+                            setProductQuantity={setProductQuantity}
+                            productName={productName}
+                            handleChangeProductName={handleChangeProductName}
+                            findProductName={findProductName}
+                            selectProduct={selectProduct}
+                            productQuantity={productQuantity}
+                            addProducts={addProducts}
+                        />
+                    </Box>
+                </Modal>
+            )}
         </>
     );
 };

@@ -36,11 +36,11 @@ export const useContainerTableData = () =>  {
 
     const addProducts = () => {
         if (addedProductsArr.length > 0) {
-            const allProducts = products.map((el, index) => {
+            const allProducts = products.map((el) => {
                 if (addedProductsArr.find((item) => item.name === el.name) && el.warehouse === '') {
                     return {
                         ...el,
-                        quantity: el?.quantity - addedProductsArr[index].quantity,
+                        quantity: el?.quantity - addedProductsArr.find((item) => item.quantity === el.quantity).quantity,
                     }
                 }
                 return el
