@@ -1,8 +1,8 @@
 # About warehouse accounting system
 
-##The warehouse accounting system was created to keep records of goods in the warehouse.
+## The warehouse accounting system was created to keep records of goods in the warehouse.
 
-####The main features of the warehouse accounting system:
+#### The main features of the warehouse accounting system:
 - When adding / editing, it is possible to set the number of units of production.
 - When specifying the number of units of production, there is the possibility of distribution by warehouses.
 - When a product is deleted, it is removed from all warehouses and the user is notified about it.
