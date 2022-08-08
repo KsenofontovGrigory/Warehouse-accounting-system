@@ -14,8 +14,8 @@ import {
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 import { RowTable } from './RowTable';
-import { SelectWrapper } from '../ModalWindow/SelectWrapper/SelectWrapper';
-import { AddedProductsList } from '../ModalWindow/AddedProductsList';
+import { SelectWrapper } from '../SelectWrapper';
+import { AddedProductsList } from '../AddedProductsList';
 
 import { useContainerTableData } from './ContainerTable.utils';
 import { useSystemData } from '../../hooks/useSystemData';

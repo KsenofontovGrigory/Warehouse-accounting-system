@@ -1,29 +1,31 @@
-import { useEffect } from 'react';
-import {Modal, Box, Button, TextField, Select, MenuItem} from '@mui/material';
+import React, { useEffect } from 'react';
+import { Button, MenuItem, Select, SwipeableDrawer, TextField } from '@mui/material';
 
 import { InputWrapper } from '../InputWrapper';
-import { SelectWrapper } from '../SelectWrapper';
 import { AddedProductsList } from '../AddedProductsList';
+import { SelectWrapper } from '../SelectWrapper';
 
+import { useModalWindowData } from '../ModalWindow/ModalWindow.utils';
 import { useSystemData } from '../../hooks/useSystemData';
-import { useModalWindowData } from './ModalWindow.utils';
 
-import {style, textFieldStyle} from './constants';
-import * as S from './ModalWindow.styles'
+import * as S from '../ModalWindow/ModalWindow.styles';
+import * as D from './DrawerWindow.styles';
+import { textFieldStyle } from '../ModalWindow/constants';
 
-export const ModalWindow = ({open, handleClose, title}) => {
-    const {
-        warehouses,
-        products,
-        addedProductsArr,
-    } = useSystemData()
-
+export const DrawerWindow = ({
+    open,
+    handleClose,
+    handleOpen,
+    title,
+}) => {
+    const { products, warehouses, addedProductsArr } = useSystemData()
     const {
         setQuantity,
         warehouse,
         handleChange,
         setAddUnallocatedProducts,
         addUnallocatedProducts,
+        selectProduct,
         setProductQuantity,
         addWarehouses,
         setName,
@@ -31,22 +33,11 @@ export const ModalWindow = ({open, handleClose, title}) => {
         addProducts,
         setUnallocatedProducts,
         unallocatedProducts,
-        selectProduct,
         findProductName,
         productName,
         productQuantity,
         handleChangeProductName,
     } = useModalWindowData(handleClose)
-
-    const renderActionsName = (
-        <TextField
-            sx={textFieldStyle}
-            required
-            type='text'
-            inputProps={{maxLength: 20}}
-            onChange={(e) => setName(e.target.value)}
-        />
-    );
 
     const renderActionsQuantity = (
         <TextField
@@ -63,15 +54,22 @@ export const ModalWindow = ({open, handleClose, title}) => {
         />
     );
 
+    const renderActionsName = (
+        <TextField
+            sx={textFieldStyle}
+            required
+            type='text'
+            inputProps={{maxLength: 20}}
+            onChange={(e) => setName(e.target.value)}
+        />
+    );
+
     const renderActionsWarehouse = (
         <Select
             sx={textFieldStyle}
             value={warehouse}
             onChange={handleChange}
         >
-            <MenuItem value=''>
-                <em>None</em>
-            </MenuItem>
             {warehouses.map((item, index) => (
                     <MenuItem
                         value={item.name}
@@ -81,6 +79,9 @@ export const ModalWindow = ({open, handleClose, title}) => {
                     </MenuItem>
                 )
             )}
+            <MenuItem value=''>
+                <em>None</em>
+            </MenuItem>
         </Select>
     );
 
@@ -93,13 +94,13 @@ export const ModalWindow = ({open, handleClose, title}) => {
     }, [unallocatedProducts])
 
     return (
-        <Modal
+        <SwipeableDrawer
             open={open}
             onClose={handleClose}
-            aria-labelledby='modal-modal-title'
-            aria-describedby='modal-modal-description'
+            onOpen={handleOpen}
+            anchor='bottom'
         >
-            <Box sx={style}>
+            <D.ContainerDrawer>
                 <S.Title>
                     {title}
                 </S.Title>
@@ -149,7 +150,7 @@ export const ModalWindow = ({open, handleClose, title}) => {
                 )}
                 <Button onClick={title === 'Add product' ? addProducts : addWarehouses}>Add</Button>
                 <S.TextError>{error}</S.TextError>
-            </Box>
-        </Modal>
+            </D.ContainerDrawer>
+        </SwipeableDrawer>
     );
 };

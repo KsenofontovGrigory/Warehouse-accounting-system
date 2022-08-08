@@ -1,7 +1,7 @@
 import React from 'react';
 import { MenuItem, Select, TextField } from '@mui/material';
 
-import { textFieldStyle } from '../constants';
+import { textFieldStyle } from '../ModalWindow/constants';
 
 import * as S from './SelectWrapper.styles';
 

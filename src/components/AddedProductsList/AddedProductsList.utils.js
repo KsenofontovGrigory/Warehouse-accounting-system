@@ -1,6 +1,6 @@
-import { addedProductsArrAction } from '../../../redux/addedProductsAdd/actions';
+import { addedProductsArrAction } from '../../redux/addedProductsAdd/actions';
 
-import { useSystemData } from '../../../hooks/useSystemData';
+import { useSystemData } from '../../hooks/useSystemData';
 
 export const useAddedProductsListData = (item, setUnallocatedProducts, unallocatedProducts) => {
     const {
