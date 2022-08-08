@@ -1,16 +1,62 @@
-import React from 'react';
+import { Button } from '@mui/material';
+
+import { ModalWindow } from '../ModalWindow';
+
+import { useSystemData } from '../../hooks/useSystemData';
+import { useHeaderData } from './Header.utils';
 
 import * as S from './Header.styles'
 
-import logo from '../../assets/images/logo.svg'
+export const Header = ({showWarehouses, showProducts, openWarehouses, openProducts}) => {
+    const {
+        products,
+        warehouses,
+    } = useSystemData()
+    const {
+        handleOpenWarehouse,
+        handleOpenProduct,
+        handleCloseProduct,
+        handleCloseWarehouse,
+        openProduct,
+        openWarehouse,
+    } = useHeaderData()
 
-export const Header = () => {
     return (
         <S.Container>
-            <S.Image src={logo} />
-            <S.Title>
-                Warehouse Accounting System
-            </S.Title>
+            <Button
+                variant={openWarehouses ? 'contained' : 'text'}
+                disabled={warehouses?.length === 0} onClick={showWarehouses}
+            >
+                Warehouses
+            </Button>
+            <Button
+                variant={openProducts ? 'contained' : 'text'}
+                disabled={products?.length === 0} onClick={showProducts}
+            >
+                Products
+            </Button>
+            <Button
+                onClick={handleOpenWarehouse}
+            >
+                Add warehouse
+            </Button>
+            <Button
+                onClick={handleOpenProduct}
+            >
+                Add product
+            </Button>
+
+            <ModalWindow
+                open={openProduct}
+                handleClose={handleCloseProduct}
+                title='Add product'
+            />
+
+            <ModalWindow
+                open={openWarehouse}
+                handleClose={handleCloseWarehouse}
+                title='Add warehouse'
+            />
         </S.Container>
     );
 };
