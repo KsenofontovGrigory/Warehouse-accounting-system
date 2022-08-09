@@ -1,10 +1,21 @@
 import { useState } from 'react';
-import { useSystemData } from '../../hooks/useSystemData';
+import { useDispatch } from 'react-redux';
+
 import { addedProductsArrAction } from '../../redux/addedProductsAdd/actions';
 import { productsAction } from '../../redux/products/actions';
 import { warehousesAction } from '../../redux/warehouses/actions';
+import { useProducts } from '../../redux/products/hooks';
+import { useAddedProductsArr } from '../../redux/addedProductsAdd/hooks';
+import { useWarehouses } from '../../redux/warehouses/hooks';
+
+import { guid } from '../../utils/generatedGUID';
 
 export const useHeaderData = () => {
+    const dispatch = useDispatch()
+    const { products } = useProducts()
+    const { addedProductsArr } = useAddedProductsArr()
+    const { warehouses } = useWarehouses()
+
     const [openProduct, setOpenProduct] = useState(false);
     const [openWarehouse, setOpenWarehouse] = useState(false);
 
@@ -12,14 +23,6 @@ export const useHeaderData = () => {
     const handleCloseProduct = () => setOpenProduct(false);
     const handleOpenWarehouse = () => setOpenWarehouse(true);
     const handleCloseWarehouse = () => setOpenWarehouse(false);
-
-    const {
-        products,
-        addedProductsArr,
-        guid,
-        dispatch,
-        warehouses,
-    } = useSystemData()
 
     const [productName, setProductName] = useState('')
     const [productQuantity, setProductQuantity] = useState('')

@@ -5,12 +5,17 @@ import {NotPositionsPage} from '../../components/NotPositionsPage';
 import { ContainerTable } from '../../components/ContainerTable';
 import { Notification } from '../../components/Notification';
 
-import { useSystemData } from '../../hooks/useSystemData';
+import { useProducts } from '../../redux/products/hooks';
+import { useWarehouses } from '../../redux/warehouses/hooks';
+
 import { useMainPageData } from './mainPage.utils';
 
 import * as S from './mainPage.styles'
 
 export const MainPage = () => {
+    const { products } = useProducts()
+    const { warehouses } = useWarehouses()
+
     const {
         openWarehouses,
         openProducts,
@@ -21,11 +26,6 @@ export const MainPage = () => {
         handleDeleteProduct,
         handleDeleteWarehouse,
     } = useMainPageData()
-
-    const {
-        warehouses,
-        products,
-    } = useSystemData()
 
     useEffect(() => {
         showProducts()

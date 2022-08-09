@@ -3,7 +3,9 @@ import { Button, MenuItem, Select, TextField, useMediaQuery } from '@mui/materia
 import { ModalWindow } from '../ModalWindow';
 import { DrawerWindow } from '../DrawerWindow';
 
-import { useSystemData } from '../../hooks/useSystemData';
+import { useWarehouses } from '../../redux/warehouses/hooks';
+import { useProducts } from '../../redux/products/hooks';
+
 import { useHeaderData } from './Header.utils';
 
 import * as S from './Header.styles'
@@ -12,10 +14,9 @@ import { textFieldStyle } from '../ModalWindow/constants';
 export const Header = ({showWarehouses, showProducts, openWarehouses, openProducts}) => {
     const isMobile = useMediaQuery('(max-width:768px)');
 
-    const {
-        products,
-        warehouses,
-    } = useSystemData()
+    const { warehouses } = useWarehouses()
+    const { products } = useProducts()
+
     const {
         setName,
         setQuantity,

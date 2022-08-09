@@ -1,16 +1,15 @@
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 import { productsAction } from '../../redux/products/actions';
 import { warehousesAction } from '../../redux/warehouses/actions';
-
-import { useSystemData } from '../../hooks/useSystemData';
+import { useProducts } from '../../redux/products/hooks';
+import { useWarehouses } from '../../redux/warehouses/hooks';
 
 export const useMainPageData = () => {
-    const {
-        warehouses,
-        products,
-        dispatch
-    } = useSystemData()
+    const dispatch = useDispatch()
+    const { products } = useProducts()
+    const { warehouses } = useWarehouses()
 
     const [openWarehouses, setOpenWarehouses] = useState(false)
     const [openProducts, setOpenProducts] = useState(false)

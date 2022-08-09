@@ -1,12 +1,17 @@
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 import { addedProductsArrAction } from '../../redux/addedProductsAdd/actions';
 import { productsAction } from '../../redux/products/actions';
+import { useProducts } from '../../redux/products/hooks';
+import { useAddedProductsArr } from '../../redux/addedProductsAdd/hooks';
 
-import { useSystemData } from '../../hooks/useSystemData';
+import { guid } from '../../utils/generatedGUID';
 
 export const useContainerTableData = () =>  {
-    const { products, dispatch, addedProductsArr, guid } = useSystemData()
+    const dispatch = useDispatch()
+    const { products } = useProducts()
+    const { addedProductsArr } = useAddedProductsArr()
 
     const [productName, setProductName] = useState('')
     const [productQuantity, setProductQuantity] = useState('')

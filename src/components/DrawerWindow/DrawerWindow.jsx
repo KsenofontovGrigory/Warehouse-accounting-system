@@ -5,7 +5,8 @@ import { InputWrapper } from '../InputWrapper';
 import { AddedProductsList } from '../AddedProductsList';
 import { SelectWrapper } from '../SelectWrapper';
 
-import { useSystemData } from '../../hooks/useSystemData';
+import { useProducts } from '../../redux/products/hooks';
+import { useAddedProductsArr } from '../../redux/addedProductsAdd/hooks';
 
 import * as S from '../ModalWindow/ModalWindow.styles';
 import * as D from './DrawerWindow.styles';
@@ -15,24 +16,25 @@ export const DrawerWindow = ({
     handleClose,
     handleOpen,
     title,
-     setAddUnallocatedProducts,
-     addUnallocatedProducts,
-     setProductQuantity,
-     addWarehouses,
-     error,
-     addProducts,
-     setUnallocatedProducts,
-     unallocatedProducts,
-     selectProduct,
-     findProductName,
-     productName,
-     productQuantity,
-     handleChangeProductName,
-     renderActionsName,
-     renderActionsQuantity,
-     renderActionsWarehouse,
+    setAddUnallocatedProducts,
+    addUnallocatedProducts,
+    setProductQuantity,
+    addWarehouses,
+    error,
+    addProducts,
+    setUnallocatedProducts,
+    unallocatedProducts,
+    selectProduct,
+    findProductName,
+    productName,
+    productQuantity,
+    handleChangeProductName,
+    renderActionsName,
+    renderActionsQuantity,
+    renderActionsWarehouse,
 }) => {
-    const { products, addedProductsArr } = useSystemData()
+    const { products } = useProducts()
+    const { addedProductsArr } = useAddedProductsArr()
 
     useEffect(() => {
         setUnallocatedProducts(products.filter((item) => item.warehouse === ''))

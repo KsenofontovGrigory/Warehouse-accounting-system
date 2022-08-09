@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, MenuItem, Select, TextField } from '@mui/material';
 
-import { useSystemData } from '../../../../hooks/useSystemData';
+import { useWarehouses } from '../../../../redux/warehouses/hooks';
 
 import * as S from '../RowTable.styles';
 
@@ -13,7 +13,7 @@ export const DialogContent = ({
     setQuantity,
     handleMoveProduct,
 }) => {
-    const { warehouses } = useSystemData()
+    const { warehouses } = useWarehouses()
 
     return (
         <>

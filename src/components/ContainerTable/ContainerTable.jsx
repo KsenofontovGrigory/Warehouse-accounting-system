@@ -18,8 +18,9 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { RowTable } from './RowTable';
 import { DialogContent } from './DialogContent';
 
+import { useProducts } from '../../redux/products/hooks';
+
 import { useContainerTableData } from './ContainerTable.utils';
-import { useSystemData } from '../../hooks/useSystemData';
 
 import * as S from './ContainerTable.styles'
 import { style } from '../ModalWindow/constants';
@@ -27,7 +28,7 @@ import { style } from '../ModalWindow/constants';
 export const ContainerTable = ({handleDelete, data}) => {
     const isMobile = useMediaQuery('(max-width:768px)');
 
-    const { products } = useSystemData()
+    const { products } = useProducts()
 
     const {
         setUnallocatedProducts,

@@ -4,21 +4,21 @@ import { Button } from '@mui/material';
 import { AddedProductsList } from '../../AddedProductsList';
 import { SelectWrapper } from '../../SelectWrapper';
 
-import { useSystemData } from '../../../hooks/useSystemData';
+import { useAddedProductsArr } from '../../../redux/addedProductsAdd/hooks';
 
 export const DialogContent = ({
-                                  setUnallocatedProducts,
-                                  unallocatedProducts,
-                                  addUnallocatedProducts,
-                                  setProductQuantity,
-                                  productName,
-                                  handleChangeProductName,
-                                  findProductName,
-                                  selectProduct,
-                                  productQuantity,
-                                  addProducts,
-                              }) => {
-    const { addedProductsArr } = useSystemData()
+    setUnallocatedProducts,
+    unallocatedProducts,
+    addUnallocatedProducts,
+    setProductQuantity,
+    productName,
+    handleChangeProductName,
+    findProductName,
+    selectProduct,
+    productQuantity,
+    addProducts,
+}) => {
+    const { addedProductsArr } = useAddedProductsArr()
 
     return (
         <>

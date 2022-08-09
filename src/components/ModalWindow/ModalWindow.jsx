@@ -5,7 +5,8 @@ import { InputWrapper } from '../InputWrapper';
 import { SelectWrapper } from '../SelectWrapper';
 import { AddedProductsList } from '../AddedProductsList';
 
-import { useSystemData } from '../../hooks/useSystemData';
+import { useProducts } from '../../redux/products/hooks';
+import { useAddedProductsArr } from '../../redux/addedProductsAdd/hooks';
 
 import { style } from './constants';
 import * as S from './ModalWindow.styles'
@@ -31,10 +32,8 @@ export const ModalWindow = ({
     renderActionsQuantity,
     renderActionsWarehouse,
 }) => {
-    const {
-        products,
-        addedProductsArr,
-    } = useSystemData()
+    const { products } = useProducts()
+    const { addedProductsArr } = useAddedProductsArr()
 
     useEffect(() => {
         setUnallocatedProducts(products.filter((item) => item.warehouse === ''))
