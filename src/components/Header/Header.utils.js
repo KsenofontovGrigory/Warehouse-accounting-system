@@ -34,6 +34,8 @@ export const useHeaderData = () => {
     const [unallocatedProducts, setUnallocatedProducts] = useState([])
 
     const findProductName = products.find((item) => item.name === productName)
+    const disabledButton = !unallocatedProducts.length || addUnallocatedProducts && (!productQuantity.length || !productName.length)
+    const filteredProducts = products.filter((item) => item.warehouse === '')
 
     const selectProduct = () => {
         setAddUnallocatedProducts(true)
@@ -148,7 +150,8 @@ export const useHeaderData = () => {
         selectProduct,
         findProductName,
         productName,
-        productQuantity,
         handleChangeProductName,
+        disabledButton,
+        filteredProducts,
     }
 }

@@ -26,17 +26,18 @@ export const ModalWindow = ({
     selectProduct,
     findProductName,
     productName,
-    productQuantity,
+    disabledButton,
     handleChangeProductName,
     renderActionsName,
     renderActionsQuantity,
     renderActionsWarehouse,
+    filteredProducts,
 }) => {
     const { products } = useProducts()
     const { addedProductsArr } = useAddedProductsArr()
 
     useEffect(() => {
-        setUnallocatedProducts(products.filter((item) => item.warehouse === ''))
+        setUnallocatedProducts(filteredProducts)
     }, [products])
 
     useEffect(() => {
@@ -92,7 +93,7 @@ export const ModalWindow = ({
                         ) : null}
                         <Button
                             onClick={selectProduct}
-                            disabled={!unallocatedProducts.length || addUnallocatedProducts && (!productQuantity.length || !productName.length)}
+                            disabled={disabledButton}
                         >
                             Add unallocated products
                         </Button>

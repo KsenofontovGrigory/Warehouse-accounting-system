@@ -79,13 +79,15 @@ export const Header = ({showWarehouses, showProducts, openWarehouses, openProduc
         <S.Container>
             <Button
                 variant={openWarehouses ? 'contained' : 'text'}
-                disabled={warehouses?.length === 0} onClick={showWarehouses}
+                disabled={warehouses?.length === 0}
+                onClick={showWarehouses}
             >
                 Warehouses
             </Button>
             <Button
                 variant={openProducts ? 'contained' : 'text'}
-                disabled={products?.length === 0} onClick={showProducts}
+                disabled={products?.length === 0}
+                onClick={showProducts}
             >
                 Products
             </Button>

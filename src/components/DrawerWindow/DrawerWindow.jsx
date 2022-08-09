@@ -27,17 +27,18 @@ export const DrawerWindow = ({
     selectProduct,
     findProductName,
     productName,
-    productQuantity,
     handleChangeProductName,
     renderActionsName,
     renderActionsQuantity,
     renderActionsWarehouse,
+    disabledButton,
+    filteredProducts,
 }) => {
     const { products } = useProducts()
     const { addedProductsArr } = useAddedProductsArr()
 
     useEffect(() => {
-        setUnallocatedProducts(products.filter((item) => item.warehouse === ''))
+        setUnallocatedProducts(filteredProducts)
     }, [products])
 
     useEffect(() => {
@@ -93,7 +94,7 @@ export const DrawerWindow = ({
                         ) : null}
                         <Button
                             onClick={selectProduct}
-                            disabled={!unallocatedProducts.length || addUnallocatedProducts && (!productQuantity.length || !productName.length)}
+                            disabled={disabledButton}
                         >
                             Add unallocated products
                         </Button>
