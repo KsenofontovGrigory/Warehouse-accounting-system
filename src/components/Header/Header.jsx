@@ -7,6 +7,7 @@ import { useWarehouses } from '../../redux/warehouses/hooks';
 import { useProducts } from '../../redux/products/hooks';
 
 import { useHeaderData } from './Header.utils';
+import { inputNumberValidation } from '../../utils/inputNumberValidation';
 
 import * as S from './Header.styles'
 import { textFieldStyle } from '../ModalWindow/constants';
@@ -47,12 +48,9 @@ export const Header = ({showWarehouses, showProducts, openWarehouses, openProduc
             InputProps={{ inputProps: { min: 0 } }}
             required
             type='number'
-            onChange={(e) => {
-                if (+(e.target.value) < 1) {
-                    e.target.value = '1'
-                }
-                setQuantity(e.target.value)
-            }}
+            onChange={(e) =>
+                inputNumberValidation(e, setQuantity)
+            }
         />
     );
 

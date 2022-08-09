@@ -1,8 +1,9 @@
 import React from 'react';
 import { MenuItem, Select, TextField } from '@mui/material';
 
-import { textFieldStyle } from '../ModalWindow/constants';
+import { inputNumberValidation } from '../../utils/inputNumberValidation';
 
+import { textFieldStyle } from '../ModalWindow/constants';
 import * as S from './SelectWrapper.styles';
 
 export const SelectWrapper = ({
@@ -34,14 +35,8 @@ export const SelectWrapper = ({
             InputProps={{ inputProps: { min: 1, max: findProductName && +(findProductName?.quantity) } }}
             required
             type='number'
-            onChange={(e) => {
-                if (+(e.target.value) > findProductName?.quantity) {
-                    e.target.value = findProductName?.quantity
-                }
-                if (+(e.target.value) < 1) {
-                    e.target.value = '1'
-                }
-                setProductQuantity(e.target.value)
-            }}
+            onChange={(e) =>
+                inputNumberValidation(e, setProductQuantity, findProductName)
+            }
         />
     </S.SelectContainer>

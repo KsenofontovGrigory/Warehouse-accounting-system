@@ -1,21 +1,19 @@
 import React from 'react';
 import { Button, MenuItem, Select, TextField } from '@mui/material';
 
-import { useWarehouses } from '../../../../redux/warehouses/hooks';
+import { inputNumberValidation } from '../../../../utils/inputNumberValidation';
 
 import * as S from '../RowTable.styles';
 
-export const DialogContent = ({
+export const DialogContentRowTable = ({
     warehouseName,
     newWarehouse,
     handleChangeWarehouse,
     item,
     setQuantity,
     handleMoveProduct,
-}) => {
-    const { warehouses } = useWarehouses()
-
-    return (
+    filterWarehouse,
+}) =>
         <>
             <S.ContainerModal>
                 <p>Move from {warehouseName} to</p>
@@ -27,7 +25,7 @@ export const DialogContent = ({
                     <MenuItem value=''>
                         <em>Unallocated</em>
                     </MenuItem>
-                    {warehouses.filter((item) => item.name !== warehouseName).map((item) => {
+                    {filterWarehouse.map((item) => {
                         return (
                             <MenuItem
                                 key={item.name}
@@ -47,19 +45,10 @@ export const DialogContent = ({
                     type='number'
                     InputProps={{ inputProps: { min: 1, max: item.quantity } }}
                     defaultValue={item.quantity}
-                    onChange={(e) => {
-                        if (+(e.target.value) > +(item.quantity)) {
-                            e.target.value = item.quantity
-                        }
-                        if (+(e.target.value) < 1) {
-                            e.target.value = '1'
-                        }
-
-                        setQuantity(e.target.value)
-                    }}
+                    onChange={
+                        (e) => inputNumberValidation(e, setQuantity, item)
+                    }
                 />
             </S.ContainerModal>
             <Button onClick={handleMoveProduct}>Move</Button>
         </>
-    );
-};

@@ -8,7 +8,7 @@ import { useWarehouses } from '../../../redux/warehouses/hooks';
 
 import { guid } from '../../../utils/generatedGUID';
 
-export const useRowTableData = (item, setShowProducts, setCurrentWarehouse) => {
+export const useRowTableData = (item, setShowProducts, setCurrentWarehouse, warehouseName) => {
     const dispatch = useDispatch()
     const { products } = useProducts()
     const { warehouses } = useWarehouses()
@@ -25,6 +25,7 @@ export const useRowTableData = (item, setShowProducts, setCurrentWarehouse) => {
     const handleClose = () => setOpen(false);
 
     const findProductsOfWarehouse = products.some((el) => el.warehouse === item.name)
+    const filterWarehouse = warehouses.filter((item) => item.name !== warehouseName)
 
     const handleOpenNotification = () => {
         setOpenNotification(true);
@@ -133,5 +134,6 @@ export const useRowTableData = (item, setShowProducts, setCurrentWarehouse) => {
         handleMoveProduct,
         openNotification,
         handleCloseNotification,
+        filterWarehouse,
     }
 }

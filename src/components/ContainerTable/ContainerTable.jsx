@@ -16,7 +16,7 @@ import {
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 import { RowTable } from './RowTable';
-import { DialogContent } from './DialogContent';
+import { DialogContentContainerTable } from './DialogContentContainerTable';
 
 import { useProducts } from '../../redux/products/hooks';
 
@@ -49,8 +49,8 @@ export const ContainerTable = ({handleDelete, data}) => {
         handleChangeProductName,
         findProductName,
         selectProduct,
-        productQuantity,
         addProducts,
+        disabledButton,
     } = useContainerTableData()
 
     useEffect(() => {
@@ -154,7 +154,7 @@ export const ContainerTable = ({handleDelete, data}) => {
                     anchor='bottom'
                 >
                     <S.ContainerDrawer>
-                        <DialogContent
+                        <DialogContentContainerTable
                             setUnallocatedProducts={setUnallocatedProducts}
                             unallocatedProducts={unallocatedProducts}
                             addUnallocatedProducts={addUnallocatedProducts}
@@ -163,7 +163,7 @@ export const ContainerTable = ({handleDelete, data}) => {
                             handleChangeProductName={handleChangeProductName}
                             findProductName={findProductName}
                             selectProduct={selectProduct}
-                            productQuantity={productQuantity}
+                            productQuantity={disabledButton}
                             addProducts={addProducts}
                         />
                     </S.ContainerDrawer>
@@ -176,7 +176,7 @@ export const ContainerTable = ({handleDelete, data}) => {
                     aria-describedby='modal-modal-description'
                 >
                     <Box sx={style}>
-                        <DialogContent
+                        <DialogContentContainerTable
                             setUnallocatedProducts={setUnallocatedProducts}
                             unallocatedProducts={unallocatedProducts}
                             addUnallocatedProducts={addUnallocatedProducts}
@@ -185,7 +185,7 @@ export const ContainerTable = ({handleDelete, data}) => {
                             handleChangeProductName={handleChangeProductName}
                             findProductName={findProductName}
                             selectProduct={selectProduct}
-                            productQuantity={productQuantity}
+                            productQuantity={disabledButton}
                             addProducts={addProducts}
                         />
                     </Box>

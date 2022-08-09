@@ -22,6 +22,7 @@ export const useContainerTableData = () =>  {
     const [currentWarehouse, setCurrentWarehouse] = useState('')
 
     const warehouseName = currentWarehouse[0]?.warehouse
+    const disabledButton = !unallocatedProducts.length || (!productQuantity.length || !productName.length)
 
     const selectProduct = () => {
         setProductQuantity('')
@@ -86,7 +87,7 @@ export const useContainerTableData = () =>  {
         handleChangeProductName,
         findProductName,
         selectProduct,
-        productQuantity,
         addProducts,
+        disabledButton,
     }
 }

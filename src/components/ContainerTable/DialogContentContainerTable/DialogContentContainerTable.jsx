@@ -6,7 +6,7 @@ import { SelectWrapper } from '../../SelectWrapper';
 
 import { useAddedProductsArr } from '../../../redux/addedProductsAdd/hooks';
 
-export const DialogContent = ({
+export const DialogContentContainerTable = ({
     setUnallocatedProducts,
     unallocatedProducts,
     addUnallocatedProducts,
@@ -15,7 +15,7 @@ export const DialogContent = ({
     handleChangeProductName,
     findProductName,
     selectProduct,
-    productQuantity,
+    disabledButton,
     addProducts,
 }) => {
     const { addedProductsArr } = useAddedProductsArr()
@@ -41,7 +41,7 @@ export const DialogContent = ({
             ) : null}
             <Button
                 onClick={selectProduct}
-                disabled={!unallocatedProducts.length || (!productQuantity.length || !productName.length)}
+                disabled={disabledButton}
             >
                 Add unallocated products
             </Button>

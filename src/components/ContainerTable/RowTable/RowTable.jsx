@@ -19,9 +19,10 @@ import {
 } from '@mui/icons-material';
 
 import { Notification } from '../../Notification';
-import { DialogContent } from './DialogContent';
+import { DialogContentRowTable } from './DialogContentRowTable';
 
 import { useRowTableData } from './RowTable.utils';
+import { inputNumberValidation } from '../../../utils/inputNumberValidation';
 
 import { style } from '../../ModalWindow/constants';
 import * as S from './RowTable.styles'
@@ -56,7 +57,8 @@ export const RowTable = ({
         handleMoveProduct,
         openNotification,
         handleCloseNotification,
-    } = useRowTableData(item, setShowProducts, setCurrentWarehouse)
+        filterWarehouse,
+    } = useRowTableData(item, setShowProducts, setCurrentWarehouse, warehouseName)
 
     return (
         <TableRow
@@ -87,12 +89,9 @@ export const RowTable = ({
                                 type='number'
                                 InputProps={{ inputProps: { min: 0 } }}
                                 defaultValue={item.quantity}
-                                onChange={(e) => {
-                                    if (+(e.target.value) < 1) {
-                                        e.target.value = '1'
-                                    }
-                                    setQuantity(e.target.value)
-                                }}
+                                onChange={(e) =>
+                                    inputNumberValidation(e, setQuantity)
+                                }
                             />
                         ) : (
                             item.quantity
@@ -180,13 +179,14 @@ export const RowTable = ({
                         anchor='bottom'
                     >
                         <S.ContainerDrawer>
-                            <DialogContent
+                            <DialogContentRowTable
                                 warehouseName={warehouseName}
                                 newWarehouse={newWarehouse}
                                 handleChangeWarehouse={handleChangeWarehouse}
                                 item={item}
                                 setQuantity={setQuantity}
                                 handleMoveProduct={handleMoveProduct}
+                                filterWarehouse={filterWarehouse}
                             />
                         </S.ContainerDrawer>
                     </SwipeableDrawer>
@@ -199,13 +199,14 @@ export const RowTable = ({
                     >
                         <Box sx={style}>
 
-                            <DialogContent
+                            <DialogContentRowTable
                                 warehouseName={warehouseName}
                                 newWarehouse={newWarehouse}
                                 handleChangeWarehouse={handleChangeWarehouse}
                                 item={item}
                                 setQuantity={setQuantity}
                                 handleMoveProduct={handleMoveProduct}
+                                filterWarehouse={filterWarehouse}
                             />
                         </Box>
                     </Modal>
