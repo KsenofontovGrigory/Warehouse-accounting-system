@@ -95,12 +95,13 @@ export const useHeaderData = () => {
 
     const addWarehouses = () => {
         if (name.length) {
+            console.log(1111)
             if (addedProductsArr.length > 0) {
                 const allProducts = products.map((el) => {
                     if (addedProductsArr.find((item) => item.name === el.name) && el.warehouse === '') {
                         return {
                             ...el,
-                            quantity: el?.quantity - addedProductsArr.find((item) => item.quantity === el.quantity).quantity,
+                            quantity: el?.quantity - addedProductsArr.find((item) => item?.quantity === el?.quantity)?.quantity,
                         }
                     }
                     return el
